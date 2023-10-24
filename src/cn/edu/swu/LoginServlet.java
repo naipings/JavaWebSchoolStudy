@@ -42,6 +42,7 @@ public class LoginServlet extends HelloServlet {
             }
         }
 
+        //错误提示
 //        try (Writer writer = response.getWriter()) {
 //            writer.write("<center><h1>Wrong user name or password, try again !!</h1></center>");
 //        } catch (IOException e) {
