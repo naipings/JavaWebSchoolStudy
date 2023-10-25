@@ -74,7 +74,7 @@ public class LoginServlet extends HelloServlet {
 
     private String printHeader(HttpServletRequest request) {
         StringBuilder sb = new StringBuilder(); //字符串构造器
-        sb.append("<table style='width:70%' cellpadding='5px' cellspacing='20px'>");
+        sb.append("<table style='width:70%' padding='5px' spacing='20px'>");
         sb.append("<tr style='background-color:#336699; color:#FFF'><td>Header 名称</td><td>header 值</td></tr>");
         Enumeration<String> names = request.getHeaderNames();
         while ( names.hasMoreElements() ) {
