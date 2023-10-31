@@ -10,15 +10,9 @@
         <servlet-name>HelloServlet</servlet-name>
         <servlet-class>cn.edu.swu.HelloServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>HelloServlet</servlet-name>
         <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>HelloServlet</servlet-name>
-        <url-pattern>/hello.html</url-pattern>
     </servlet-mapping>
 
 
@@ -26,10 +20,43 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>cn.edu.swu.LoginServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>cn.edu.swu.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AuthCodeServlet</servlet-name>
+        <servlet-class>cn.edu.swu.AuthCodeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthCodeServlet</servlet-name>
+        <url-pattern>/code</url-pattern>
+    </servlet-mapping>
+
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>cn.edu.swu.AuthFilter</filter-class>
+        <init-param>
+            <param-name>ignoreUrls</param-name>
+            <param-value>index.html;/login;/code;.png;.jpg;.gif;.jpeg;.css;.js</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>

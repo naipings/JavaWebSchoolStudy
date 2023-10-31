@@ -7,22 +7,24 @@
 </head>
 <body>
     <center>
-        <h1>网上书城</h1><br><br>
+        <h1>-- 欢迎访问网上书城 --</h1><br><br>
 
-<!--        <a href="./login?user=Tom&pass=Tom123456">Login System</a><br><br>-->
-
-        <div style="background-color:#eee;padding=3em">
+        <div style="background-color:#eee; padding=3em">
             <table>
                 <tr>
                     <td>
-                        <form action="./login" method="post">
-                            User Name : <input type="text" name="user" value="Tom"/><br><br>
-                            User Pass : <input type="password" name="pass" value="123456"><br><br>
-                            <input type="submit" value="Login">
-                        </form>
+                        <center>
+                            <form action="./login" method="post">
+                                用&nbsp;&nbsp;&nbsp;户: <input type="text" name="user" value="Tom"/><br><br>
+                                密&nbsp;&nbsp;&nbsp;码: <input type="password" name="pass" value="123456"><br><br>
+                                验证码: <input type="text", name="code"><br><br>
+                                <input type="submit" value="Login">
+                            </form>
+                        </center>
                     </td>
                     <td>
-                        <img src="./image/login.png" width="150px" style="margin-left:40px">
+<!--                        <img src="./image/login.png" width="150px" style="margin-left:40px">-->
+                        <img src="./code" style="margin-left:60px">
                     </td>
                 </tr>
             </table>

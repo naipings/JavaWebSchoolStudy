@@ -2,6 +2,7 @@ package cn.edu.swu;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -17,19 +18,27 @@ public class LoginServlet extends HelloServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
+        String code = request.getParameter("code");
+
+        HttpSession session = request.getSession(true);
+
+        if ( code == null || !code.equalsIgnoreCase((String)session.getAttribute(AuthCodeServlet.AUTH_CODE)) ) {
+            response.sendRedirect("./index.html");
+            return;
+        }
 
         response.setContentType("text/html");
 
         if ( user!= null && user.equals("Tom") ) {
             if ( pass!= null && pass.equals("123456") ) {
-//                try (Writer writer = response.getWriter()) {
-//                    writer.write("<center><h1>Welcome " + user + " !!</h1></center>");
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
+                //登陆成功，在session中添加登陆成功的标记
+                session.setAttribute(AuthFilter.LOGIN_STATUS, AuthStatus.LOGIN_SUCCESS);
 
-//                response.sendRedirect("./main.html");
+                //返回重一个定向
+                response.sendRedirect("./main.html");
 
+                //返回HTML代码
+                /*
                 try (Writer writer = response.getWriter() ) {
                     writer.write("<center>");
                     writer.write("<h1 style='color:blue'>欢迎登陆网上书城！！</h1>");
@@ -38,6 +47,7 @@ public class LoginServlet extends HelloServlet {
                     writer.write(this.printHeader(request));
                     writer.write("</center>");
                 }
+                 */
                 return;
             }
         }
