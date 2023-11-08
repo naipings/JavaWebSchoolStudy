@@ -1,5 +1,7 @@
 package cn.edu.swu;
 
+import cn.edu.swu.common.DBTools;
+import cn.edu.swu.dao.LoginDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +22,9 @@ public class LoginServlet extends HelloServlet {
         String pass = request.getParameter("pass");
         String code = request.getParameter("code");
 
+        DBTools dbTools = new DBTools("root","20030504", "bookstore");
+
+        response.setContentType("text/html");
         HttpSession session = request.getSession(true);
 
         if ( code == null || !code.equalsIgnoreCase((String)session.getAttribute(AuthCodeServlet.AUTH_CODE)) ) {
@@ -27,40 +32,18 @@ public class LoginServlet extends HelloServlet {
             return;
         }
 
-        response.setContentType("text/html");
+        boolean star = LoginDao.loginStar(user, pass); //将获取的账号密码传过去，如果账号密码正确就会返回true
+        if ( star == true ) {
+            //登陆成功，在session中添加登陆成功的标记
+            session.setAttribute(AuthFilter.LOGIN_STATUS, AuthStatus.LOGIN_SUCCESS);
+            System.out.println(user+pass);
+            //返回重一个定向
+            response.sendRedirect("./main");
 
-        if ( user!= null && user.equals("Tom") ) {
-            if ( pass!= null && pass.equals("123456") ) {
-                //登陆成功，在session中添加登陆成功的标记
-                session.setAttribute(AuthFilter.LOGIN_STATUS, AuthStatus.LOGIN_SUCCESS);
-
-                //返回重一个定向
-                response.sendRedirect("./main.html");
-
-                //返回HTML代码
-                /*
-                try (Writer writer = response.getWriter() ) {
-                    writer.write("<center>");
-                    writer.write("<h1 style='color:blue'>欢迎登陆网上书城！！</h1>");
-                    writer.write(this.printParameter(request));
-                    writer.write("<br/><br/>");
-                    writer.write(this.printHeader(request));
-                    writer.write("</center>");
-                }
-                 */
-                return;
-            }
+            return;
         }
 
         //错误提示
-//        try (Writer writer = response.getWriter()) {
-//            writer.write("<center><h1>Wrong user name or password, try again !!</h1></center>");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
-//        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "用户名密码不正确，请重新登录！");
-
         try (Writer writer = response.getWriter()) {
             response.setHeader("Refresh", "5;url=./index.html"); //隔5秒钟刷新到index.html这个网页
             writer.write("<center><h1 style='color:red'>用户名密码不正确，需要重新登录，5秒后自动跳转！</h1></center>");
