@@ -18,8 +18,8 @@ public class HelloServlet extends HttpServlet  {
         System.out.println("Servlet Destroy");
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("Servlet doGet Service");
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Servlet doPost Service");
         response.setContentType("text/html");
         try (Writer writer = response.getWriter()) {
             writer.write("<center><h1>Hello World from Servlet In Smart Tomcat</h1></center>");

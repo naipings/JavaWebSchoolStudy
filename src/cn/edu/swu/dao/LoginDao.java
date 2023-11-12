@@ -15,7 +15,6 @@ public class LoginDao {
         PreparedStatement preSql; //预处理语句
         ResultSet rs; //定义一个结果集（存放结果）
         String sqlStr = "select * from users where account = ? and password = ?";  //?表示从外部输入的
-
         try {
             preSql = con.prepareStatement(sqlStr);
             preSql.setString(1, account); //相当于把上面第一个问号设置成账号
@@ -31,4 +30,42 @@ public class LoginDao {
             return false;
         }
     }
+
+    //注册账号
+    public static int loginRegister(String account, String password) { //提供两个参数，第一个账号，第二个密码，采用预处理的方法
+        PreparedStatement preSql; //预处理语句
+        String sqlStr = "insert into users values(?, ?)";  //?表示从外部输入的
+        int num;
+
+        try {
+            preSql = con.prepareStatement(sqlStr);
+            preSql.setString(1, account); //相当于把上面第一个问号设置成账号
+            preSql.setString(2, password); //把上面第二个问号设置成密码
+
+            num = preSql.executeUpdate(); //更新数据，返回值放到num里面
+            return num;
+
+        } catch (SQLException e) { //账号重复
+            return 3;
+        }
+    }
+
+    //注销账号
+    public static int loginDelete(String account, String password) { //提供两个参数，第一个账号，第二个密码，采用预处理的方法
+        PreparedStatement preSql; //预处理语句
+        String sqlStr = "delete from users where account=?";  //?表示从外部输入的
+        int num;
+
+        try {
+            preSql = con.prepareStatement(sqlStr);
+            preSql.setString(1, account); //相当于把上面第一个问号设置成账号
+
+            num = preSql.executeUpdate(); //更新数据，返回值放到num里面
+            return num;
+
+        } catch (SQLException e) { //账号重复
+            return 3;
+        }
+    }
+
 }

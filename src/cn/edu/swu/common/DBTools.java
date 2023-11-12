@@ -46,6 +46,8 @@ public class DBTools {
                         BigDecimal price = resultSet.getBigDecimal(4);
                         String content = resultSet.getString(5);
 
+                        System.out.println(String.format("%s, %s, %s, %s, %s",id,name,author,price,content));
+
                         Book book = new Book(id, name, author, price, content);
                         result.add(book);
                     }

@@ -9,10 +9,11 @@ public class PageTools {
                 <meta charset="UTF-8">
                 <title>网上书城</title>
                 <link rel="stylesheet" type="text/css" href="css/bookstore.css" />
+                <link rel="stylesheet" type="text/css" href="css/a.css" />
             </head>
             <body>
             <div style="float: right">
-                <a href="./logout">退出系统</a>
+                <a href="./logout" methods="post">退出系统</a>
             </div>
             <center>
                 <h1 style='color:blue'>欢迎访问西大网上书城</h1>

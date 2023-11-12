@@ -2,29 +2,33 @@ package cn.edu.swu;
 
 import cn.edu.swu.common.DBTools;
 import cn.edu.swu.dao.LoginDao;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Enumeration;
 
-public class LoginServlet extends HelloServlet {
+public class LoginServlet extends HttpServlet {
 
-    //user pass
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         this.doPost(request, response);
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         String code = request.getParameter("code");
 
         DBTools dbTools = new DBTools("root","20030504", "bookstore");
 
-        response.setContentType("text/html");
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
         HttpSession session = request.getSession(true);
 
         if ( code == null || !code.equalsIgnoreCase((String)session.getAttribute(AuthCodeServlet.AUTH_CODE)) ) {
@@ -36,9 +40,9 @@ public class LoginServlet extends HelloServlet {
         if ( star == true ) {
             //登陆成功，在session中添加登陆成功的标记
             session.setAttribute(AuthFilter.LOGIN_STATUS, AuthStatus.LOGIN_SUCCESS);
-            System.out.println(user+pass);
             //返回重一个定向
             response.sendRedirect("./main");
+            System.out.println(user+pass);
 
             return;
         }
@@ -51,32 +55,5 @@ public class LoginServlet extends HelloServlet {
 
     }
 
-    private String printParameter(HttpServletRequest request) {
-        StringBuilder sb = new StringBuilder(); //字符串构造器
-        sb.append("<table style='width:70%' padding='5px' spacing='20px'>");
-        sb.append("<tr style='background-color:#336699; color:#FFF'><td>参数名称</td><td>参数值</td></tr>");
-        Enumeration<String> names = request.getParameterNames();
-        while ( names.hasMoreElements() ) {
-            String name = names.nextElement();
-            sb.append(String.format("<tr style='background-color:#eee'><td>%s</td><td>%s</td></tr>", name, request.getHeader(name)));
-//            sb.append(name + " : " + request.getParameter(name) + "<br/>");
-        }
-        sb.append("</table>");
-        return sb.toString();
-    }
-
-    private String printHeader(HttpServletRequest request) {
-        StringBuilder sb = new StringBuilder(); //字符串构造器
-        sb.append("<table style='width:70%' padding='5px' spacing='20px'>");
-        sb.append("<tr style='background-color:#336699; color:#FFF'><td>Header 名称</td><td>header 值</td></tr>");
-        Enumeration<String> names = request.getHeaderNames();
-        while ( names.hasMoreElements() ) {
-            String name = names.nextElement();
-            sb.append(String.format("<tr style='background-color:#eee'><td>%s</td><td>%s</td></tr>", name, request.getHeader(name)));
-//            sb.append(name + " : " + request.getHeader(name) + "<br/>");
-        }
-        sb.append("</table>");
-        return sb.toString();
-    }
 
 }

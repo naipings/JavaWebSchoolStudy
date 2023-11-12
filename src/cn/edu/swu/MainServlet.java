@@ -1,6 +1,8 @@
 package cn.edu.swu;
 
 import cn.edu.swu.common.PageTools;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,11 +11,27 @@ import cn.edu.swu.model.Book;
 import cn.edu.swu.common.DBTools;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.List;
 
 public class MainServlet extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+
+//    protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        String url = request.getRequestURL().toString();
+//        if ( url.equals("./main")) {
+//            this.doPost(request, response);
+//        } else {
+//            return;
+//        }
+//    }
+//
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        this.doPost(request, response);
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        System.out.println("sdfsdfsdfsfsd");
         List<Book> books = DBTools.getAllBook();
         StringBuilder sb = new StringBuilder();
         sb.append("<table class='tb-book'>");
@@ -24,7 +42,8 @@ public class MainServlet extends HttpServlet {
         }
         sb.append("</table>");
 
-        response.setContentType("text/html");
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
         try (Writer writer = response.getWriter()) {
             writer.write(PageTools.warp(sb.toString()));
         } catch (IOException e) {

@@ -32,15 +32,6 @@ public class AuthFilter extends HttpFilter {
                 return;
             }
         }
-//        System.out.println(uri);
-//        if ( uri.endsWith("/index.html") || uri.endsWith("/login")
-//                || uri.endsWith(".png")
-//                || uri.endsWith(".jpg")
-//                || uri.endsWith(".gif")
-//                || uri.endsWith(".jpeg")) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
 
         AuthStatus status = (AuthStatus) session.getAttribute(LOGIN_STATUS);
         // 如果session里的标记为登陆成功，就放行，访问下一个Filter
@@ -49,6 +40,8 @@ public class AuthFilter extends HttpFilter {
         } else { //登录失败，就跳转到登录页
             response.sendRedirect("./index.html");
         }
+
+
     }
 
 }

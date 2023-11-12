@@ -2,6 +2,7 @@ package cn.edu.swu;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -9,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class AuthCodeServlet extends HelloServlet {
+public class AuthCodeServlet extends HttpServlet {
 
     public final static String AUTH_CODE = "AUTH_CODE";
 
