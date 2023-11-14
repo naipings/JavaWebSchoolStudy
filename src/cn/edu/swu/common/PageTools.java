@@ -17,6 +17,10 @@ public class PageTools {
             </div>
             <center>
                 <h1 style='color:blue'>欢迎访问西大网上书城</h1>
+                <div>
+                    <div><a href="./add.html">添&nbsp;&nbsp;加</a></div>
+                </div>    
+                <br><br>
                  %s
                  
             </center>

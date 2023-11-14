@@ -15,7 +15,7 @@ public class AuthCodeServlet extends HttpServlet {
     public final static String AUTH_CODE = "AUTH_CODE";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(120, 60, 4, 30);
+        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(110, 55, 4, 30);
 
         HttpSession session = request.getSession(true);
         session.setAttribute(AUTH_CODE, captcha.getCode());

@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>login</title>
-    <link rel="stylesheet" type="text/css" href="css/a.css" />
-</head>
-<body>
-    <center>
-        <h1>-- 欢迎访问网上书城 --</h1><br><br>
+    <link rel="stylesheet" type="text/css" href="./css/login.css" />
+  </head>
+  <body>
 
-        <div style="background-color:#eee; padding=3em">
-            <table>
-                <tr>
-                    <td>
-                        <center>
-                            <form action="./login" method="post">
-                                用&nbsp;&nbsp;&nbsp;户: <input type="text" name="user" value="Tom"/><br><br>
-                                密&nbsp;&nbsp;&nbsp;码: <input type="password" name="pass" value="123456"><br><br>
-                                验证码: <input type="text", name="code"><br><br>
-                                <input type="submit" value="Login">
-                            </form>
-                        </center>
-                    </td>
-                    <td>
-                        <img src="./code" style="margin-left:60px">
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div style="margin-right:20px">
-            <a href="./register">注册账号</a>
-            <a href="./delete">注销账户</a>
-        </div>
-    </center>
-</body>
+  <h1 style="text-algin:center;">-- 欢迎访问网上书城 --</h1>
+      <br /><br />
+
+      <div class="con">
+        <h2 style="margin-top: 5px; text-align: center;">Login</h2>
+        <table>
+          <tr>
+            <td>
+              <center>
+                <form action="./login" method="post">
+                  <div class="T">user name</div>
+                  <div class="co"><input type="text" name="user" value="Tom" /></div><br /><br />
+                  <div class="T">password</div>
+                  <div class="co"><input
+                    type="password"
+                    name="pass"
+                    value="123456"
+                  /></div><br /><br />
+                  <div class="T">code</div>
+                  <div class="co"><input type="text" name="code" /></div>
+                  <img src="./code"/>
+                  <span>
+                    <a href="./register">注册账号</a>
+                    <a href="./delete">注销账户</a>
+                  </span>
+                  <div class="go">
+                    <input type="submit" value="Login"/>
+                    <div class="L_" style="pointer-events: none;">
+                      <div class="l_"></div>
+                      <div class="l_"></div>
+                      <div class="l_"></div>
+                    </div>
+                  </div>
+                </form>
+              </center>
+           </td>
+         </tr>
+        </table>
+      </div>
+
+
+  </body>
 </html>

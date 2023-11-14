@@ -2,10 +2,7 @@ package cn.edu.swu;
 
 import cn.edu.swu.common.DBTools;
 import cn.edu.swu.dao.LoginDao;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,8 +10,11 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class LoginServlet extends HttpServlet {
+
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         this.doPost(request, response);
@@ -24,8 +24,6 @@ public class LoginServlet extends HttpServlet {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         String code = request.getParameter("code");
-
-        DBTools dbTools = new DBTools("root","20030504", "bookstore");
 
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
@@ -40,8 +38,9 @@ public class LoginServlet extends HttpServlet {
         if ( star == true ) {
             //登陆成功，在session中添加登陆成功的标记
             session.setAttribute(AuthFilter.LOGIN_STATUS, AuthStatus.LOGIN_SUCCESS);
-            //返回重一个定向
+            //返回一个重定向
             response.sendRedirect("./main");
+
             System.out.println(user+pass);
 
             return;

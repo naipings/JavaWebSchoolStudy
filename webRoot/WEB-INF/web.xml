@@ -87,7 +87,7 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/login</url-pattern>
     </filter-mapping>
 
 
@@ -101,7 +101,7 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthFilterRegister</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/register</url-pattern>
     </filter-mapping>
 
 
@@ -115,7 +115,7 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthFilterDelete</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/delete</url-pattern>
     </filter-mapping>
 
 

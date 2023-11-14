@@ -1,6 +1,7 @@
 package cn.edu.swu.common;
 
 import cn.edu.swu.model.Book;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -9,34 +10,52 @@ import java.util.List;
 
 public class DBTools {
 
-    public static Connection conn = null;
+    private static BasicDataSource dataSource = null;
+    private static DBTools instance = new DBTools();
 
-    public DBTools(String account, String password, String database) { //三个参数分别是：数据库账号，数据库密码，数据库名字
-        //连接驱动
+    static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("加载驱动成功");
-        } catch (Exception e) {
-            System.out.println("加载驱动失败");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
-        //连接数据库
-        try {
-            String url = "jdbc:mysql://localhost:3306/"+database+"?characterEncoding=utf-8&useSSL=false";
-            conn = DriverManager.getConnection(url, account, password);
-            System.out.println("连接数据库成功");
-        }catch (SQLException e1) {
-            System.out.println("——————————————————————————");
-            System.out.println("连接数据库失败");
-            e1.printStackTrace(); //打印报错信息
-            System.out.println("——————————————————————————");
+        dataSource = new BasicDataSource();
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/bookstore");
+        dataSource.setUsername("root");
+        dataSource.setPassword("20030504");
+
+        dataSource.setMinIdle(5);
+        dataSource.setMaxIdle(10);
+        dataSource.setMaxTotal(25);
+    }
+
+    private DBTools() {
+
+    }
+
+    public static DBTools instance() {
+        return instance;
+    }
+
+    public Connection getConnection() throws SQLException, ClassNotFoundException {
+        return dataSource.getConnection();
+    }
+
+    public void addBook(Book book) {
+        try (Connection connection = getConnection()) {
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static List<Book> getAllBook() {
         List<Book> result = new ArrayList<>();
         String sql = "select id, name, author, price, content from book";
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DBTools.instance().getConnection()) {
             try (Statement statement = connection.createStatement()) {
                 try (ResultSet resultSet = statement.executeQuery(sql)) {
                     while (resultSet.next()) {
@@ -62,14 +81,6 @@ public class DBTools {
         }
         ;
         return result;
-    }
-
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
-        String dbUrl = "jdbc:mysql://127.0.0.1:3306/bookstore";
-        String dbUser = "root";
-        String dbPassword = "20030504";
-        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
 }

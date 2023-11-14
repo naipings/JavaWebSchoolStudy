@@ -2,7 +2,6 @@ package cn.edu.swu;
 
 import cn.edu.swu.common.PageTools;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,15 +16,6 @@ import java.util.List;
 
 public class MainServlet extends HttpServlet {
 
-//    protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        String url = request.getRequestURL().toString();
-//        if ( url.equals("./main")) {
-//            this.doPost(request, response);
-//        } else {
-//            return;
-//        }
-//    }
-//
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         this.doPost(request, response);
     }
