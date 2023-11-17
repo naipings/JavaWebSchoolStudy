@@ -22,6 +22,13 @@ public class Book {
         this.content = content;
     }
 
+    public Book(String name, String author, BigDecimal price, String content) {
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.content = content;
+    }
+
     public Integer getId() {
         return id;
     }

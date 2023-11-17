@@ -16,25 +16,24 @@ public class DBTools {
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            dataSource = new BasicDataSource();
+            dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/bookstore");
+            dataSource.setUsername("root");
+            dataSource.setPassword("20030504");
+
+            dataSource.setMinIdle(5);
+            dataSource.setMaxIdle(10);
+            dataSource.setMaxTotal(25);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/bookstore");
-        dataSource.setUsername("root");
-        dataSource.setPassword("20030504");
-
-        dataSource.setMinIdle(5);
-        dataSource.setMaxIdle(10);
-        dataSource.setMaxTotal(25);
     }
 
     private DBTools() {
 
     }
 
-    public static DBTools instance() {
+    public static DBTools getInstance() {
         return instance;
     }
 
@@ -42,20 +41,37 @@ public class DBTools {
         return dataSource.getConnection();
     }
 
-    public void addBook(Book book) {
-        try (Connection connection = getConnection()) {
+    public boolean addBook(Book book) throws SQLException, ClassNotFoundException {
+        String insertTemplate = "insert into book(name, author, price, content) values('%s', '%s', '%s', '%s')";
+        String sql = String.format(insertTemplate, book.getName(), book.getAuthor(), book.getPrice(), book.getContent());
+        return this.execute(sql);
+    }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    public boolean deleteBook(Integer id) throws SQLException, ClassNotFoundException {
+        String deleteTemplate = "delete from book where id = %d";
+        String sql = String.format(deleteTemplate, id);
+        return this.execute(sql);
+    }
+
+    public boolean updateBook(Book book, Integer id) throws SQLException, ClassNotFoundException {
+        String updateTemplate = "update book set name = '%s', author = '%s', price = '%s', content = '%s' where id = %d";
+        String sql = String.format(updateTemplate, book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), id);
+        return this.execute(sql);
+    }
+
+    //”增删改“可以用的
+    private boolean execute(String sql) throws SQLException, ClassNotFoundException {
+        try (Connection connection = getConnection()) {
+            try (Statement statement = connection.createStatement()) {
+                return statement.execute(sql);
+            }
         }
     }
 
     public static List<Book> getAllBook() {
         List<Book> result = new ArrayList<>();
         String sql = "select id, name, author, price, content from book";
-        try (Connection connection = DBTools.instance().getConnection()) {
+        try (Connection connection = DBTools.getInstance().getConnection()) {
             try (Statement statement = connection.createStatement()) {
                 try (ResultSet resultSet = statement.executeQuery(sql)) {
                     while (resultSet.next()) {
@@ -79,7 +95,7 @@ public class DBTools {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        ;
+
         return result;
     }
 

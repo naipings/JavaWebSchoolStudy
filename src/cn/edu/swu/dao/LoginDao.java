@@ -12,7 +12,7 @@ public class LoginDao {
 
     static {
         try {
-            con = DBTools.instance().getConnection();
+            con = DBTools.getInstance().getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
