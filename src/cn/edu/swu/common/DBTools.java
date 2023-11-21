@@ -1,5 +1,6 @@
 package cn.edu.swu.common;
 
+import cn.edu.swu.ResultSetVisitor;
 import cn.edu.swu.model.Book;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DBTools {
 
@@ -53,11 +55,44 @@ public class DBTools {
         return this.execute(sql);
     }
 
-    public boolean updateBook(Book book, Integer id) throws SQLException, ClassNotFoundException {
-        String updateTemplate = "update book set name = '%s', author = '%s', price = '%s', content = '%s' where id = %d";
-        String sql = String.format(updateTemplate, book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), id);
+    public List<Book> queryBook(String sql) throws SQLException, ClassNotFoundException {
+        final List<Book> books = new ArrayList<>();
+        this.query(sql, new ResultSetVisitor() {
+
+            public void visit(ResultSet resultSet) {
+                Book book = new Book();
+                try {
+                    book.setId(resultSet.getInt("id"));
+                    book.setName(resultSet.getString("name"));
+                    book.setAuthor(resultSet.getString("author"));
+                    book.setPrice(BigDecimal.valueOf(resultSet.getDouble("price")));
+                    book.setContent(resultSet.getString("content"));
+                    books.add(book);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
+        return books;
+    }
+
+    public Book gitBookById(Integer id) throws SQLException, ClassNotFoundException {
+        String template = "select * from book where id = %d";
+        String sql = String.format(template, id);
+
+        List<Book> books = this.queryBook(sql);
+
+        return books.size() > 0 ? books.get(0) : null;
+    }
+
+    public boolean updateBook(Book book) throws SQLException, ClassNotFoundException {
+        String template = "update book set name = '%s', author = '%s', price = %s, content ='%s' where id = %d";
+        String sql = String.format(template, book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getId());
         return this.execute(sql);
     }
+
+
 
     //”增删改“可以用的
     private boolean execute(String sql) throws SQLException, ClassNotFoundException {
@@ -65,6 +100,20 @@ public class DBTools {
             try (Statement statement = connection.createStatement()) {
                 return statement.execute(sql);
             }
+        }
+    }
+
+    //执行一个执行查询的帮助接口
+    private void query(String sql, ResultSetVisitor visitor) throws SQLException, ClassNotFoundException {
+        try ( Connection connection = dataSource.getConnection() ) {
+            try ( Statement statement = connection.createStatement() ) {
+                try ( ResultSet resultSet = statement.executeQuery(sql) ) {
+                    while (resultSet.next()) {
+                        visitor.visit(resultSet);
+                    }
+                }
+            }
+
         }
     }
 
@@ -90,9 +139,7 @@ public class DBTools {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 

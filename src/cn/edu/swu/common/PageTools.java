@@ -18,7 +18,11 @@ public class PageTools {
             <center>
                 <h1 style='color:blue'>欢迎访问SWU网上书城</h1>
                 <hr>
-                <div style="font-size:16px"><a href="./add.html">添&nbsp;&nbsp;加</a></div>      
+                <div style="font-size:16px display:inline-block"><a href="./add.html">添&nbsp;&nbsp;加</a></div>
+                <div style="display:inline-block"><form action="./search" method="post">
+                <select name='type'><option value="name">书 名</option><option value="author">作 者</option></select>
+                <input type="text" name='key'><input type='submit' value='查 询'>
+                </form></div>  
                 <br><br>
                  %s
                  

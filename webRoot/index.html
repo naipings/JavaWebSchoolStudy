@@ -5,58 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>login</title>
     <link rel="stylesheet" type="text/css" href="./css/login.css" />
-  
-      <!--live2D必备资源-->
-      <script src="https://unpkg.com/core-js-bundle@3.6.1/minified.js"></script>
 
+    <!--live2D必备资源-->
+    <!-- <script src="https://unpkg.com/core-js-bundle@3.6.1/minified.js"></script> -->
+
+    <!-- Live2DCubismCore script -->
+    <!-- <script src="../public/js/live2dcubismcore.js"></script> -->
+    <!-- Build script -->
+    <!-- <script src="../public/js/bundle.js"></script> -->
+
+    <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+
+  
   </head>
   <body>
-
-  <h1   style="
+    <h1
+      style="
         text-align: center;
         color: aliceblue;
         font-size: 300%;
         font-family: 华文新魏;
-      ">-- 欢迎访问网上书城 --</h1>
-      <br /><br />
+      "
+    >
+      -- 欢迎访问网上书城 --
+    </h1>
+    <br /><br />
 
-      <div class="con">
-        <h2 style="margin-top: 5px; text-align: center;">Login</h2>
-        <table>
-          <tr>
-            <td>
-              <center>
-                <form action="./login" method="post">
-                  <div class="T">user name</div>
-                  <div class="co"><input type="text" name="user" value="Tom" /></div><br /><br />
-                  <div class="T">password</div>
-                  <div class="co"><input
-                    type="password"
-                    name="pass"
-                    value="123456"
-                  /></div><br /><br />
-                  <div class="T">code</div>
-                  <div class="co"><input type="text" name="code" /></div>
-                  <img src="./code"/>
-                  <span>
-                    <a href="./register">注册账号</a>
-                    <a href="./delete">注销账户</a>
-                  </span>
-                  <div class="go">
-                    <input type="submit" value="Login"/>
-                    <div class="L_" style="pointer-events: none;">
-                      <div class="l_"></div>
-                      <div class="l_"></div>
-                      <div class="l_"></div>
-                    </div>
+    <div class="con">
+      <h2 style="margin-top: 5px; text-align: center">Login</h2>
+      <table>
+        <tr>
+          <td>
+            <center>
+              <form action="./login" method="post">
+                <div class="T">user name</div>
+                <div class="co">
+                  <input type="text" name="user" value="Tom" />
+                </div>
+                <br /><br />
+                <div class="T">password</div>
+                <div class="co">
+                  <input type="password" name="pass" value="123456" />
+                </div>
+                <br /><br />
+                <div class="T">code</div>
+                <div class="co"><input type="text" name="code" /></div>
+                <img src="./code" />
+                <span>
+                  <a href="./register">注册账号</a>
+                  <a href="./delete">注销账户</a>
+                </span>
+                <div class="go">
+                  <input type="submit" value="Login" />
+                  <div class="L_" style="pointer-events: none">
+                    <div class="l_"></div>
+                    <div class="l_"></div>
+                    <div class="l_"></div>
                   </div>
-                </form>
-              </center>
-           </td>
-         </tr>
-        </table>
-      </div>
-
-
+                </div>
+              </form>
+            </center>
+          </td>
+        </tr>
+      </table>
+    </div>
   </body>
 </html>

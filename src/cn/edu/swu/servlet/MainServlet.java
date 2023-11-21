@@ -24,13 +24,13 @@ public class MainServlet extends HttpServlet {
         List<Book> books = DBTools.getAllBook();
         StringBuilder sb = new StringBuilder();
         sb.append("<table class='tb-book'>");
-        sb.append("<tr><th>编号</th><th>书名</th><th>作者</th><th>价格</th><th>内容</th><th></th></tr>");
+        sb.append("<tr><th>编号</th><th>书名</th><th>作者</th><th>价格</th><th>内容</th><th></th><th></th></tr>");
         for (Book book : books) {
             sb.append(String.format("<tr><td>%d</td><td>%s</td><td>%s</td><td>%f</td><td>%s</td>" +
                             "<td><a href='./deleteBook?id=%d'>删除</a></td>" +
-//                            "<td><a href='./updateBook?id=%d'>修改</a></td>" +
+                            "<td><a href='./updateBook.html?id=%d'>修改</a></td>" +
                             "</tr>",
-                    book.getId(), book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getId()));
+                    book.getId(), book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getId(), book.getId()));
         }
         sb.append("</table>");
 

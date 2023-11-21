@@ -98,6 +98,16 @@
 
 
     <servlet>
+        <servlet-name>UpdateBookHtml</servlet-name>
+        <servlet-class>cn.edu.swu.UpdateBookHtml</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateBookHtml</servlet-name>
+        <url-pattern>/updateBook.html</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>UpdateBookServlet</servlet-name>
         <servlet-class>cn.edu.swu.servlet.UpdateBookServlet</servlet-class>
     </servlet>
