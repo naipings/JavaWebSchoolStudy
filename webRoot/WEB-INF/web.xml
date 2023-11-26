@@ -4,122 +4,12 @@
   xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                       https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
   version="6.0"
-  metadata-complete="true">
-
-
-    <servlet>
-        <servlet-name>HelloServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.HelloServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HelloServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.MainServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/main</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>AuthCodeServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.AuthCodeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AuthCodeServlet</servlet-name>
-        <url-pattern>/code</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.RegisterServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>RegisterServlet</servlet-name>
-        <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>DeleteServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.DeleteServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DeleteServlet</servlet-name>
-        <url-pattern>/delete</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>AddBookServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.AddBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AddBookServlet</servlet-name>
-        <url-pattern>/addBook</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>DeleteBookServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.DeleteBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DeleteBookServlet</servlet-name>
-        <url-pattern>/deleteBook</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>UpdateBookHtml</servlet-name>
-        <servlet-class>cn.edu.swu.UpdateBookHtml</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateBookHtml</servlet-name>
-        <url-pattern>/updateBook.html</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>UpdateBookServlet</servlet-name>
-        <servlet-class>cn.edu.swu.servlet.UpdateBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateBookServlet</servlet-name>
-        <url-pattern>/updateBook</url-pattern>
-    </servlet-mapping>
+  metadata-complete="false">
 
 
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>cn.edu.swu.filter.AuthFilter</filter-class>
+        <filter-class>cn.edu.swu.security.filter.AuthFilter</filter-class>
         <init-param>
             <param-name>ignoreUrls</param-name>
             <param-value>index.html;/login;/code;/register;/delete;register.html;register_successful.html;delete.html;delete_successful.html;.png;.jpg;.gif;.jpeg;.css;.js</param-value>
@@ -133,7 +23,7 @@
 
     <filter>
         <filter-name>AuthFilterRegister</filter-name>
-        <filter-class>cn.edu.swu.filter.AuthFilterRegister</filter-class>
+        <filter-class>cn.edu.swu.security.filter.AuthFilterRegister</filter-class>
         <init-param>
             <param-name>ignoreUrls</param-name>
             <param-value>index.html;/login;/code;/register;/delete;register.html;register_successful.html;delete.html;delete_successful.html;.png;.jpg;.gif;.jpeg;.css;.js</param-value>
@@ -147,7 +37,7 @@
 
     <filter>
         <filter-name>AuthFilterDelete</filter-name>
-        <filter-class>cn.edu.swu.filter.AuthFilterDelete</filter-class>
+        <filter-class>cn.edu.swu.security.filter.AuthFilterDelete</filter-class>
         <init-param>
             <param-name>ignoreUrls</param-name>
             <param-value>index.html;/login;/code;/register;/delete;register.html;register_successful.html;delete.html;delete_successful.html;.png;.jpg;.gif;.jpeg;.css;.js</param-value>

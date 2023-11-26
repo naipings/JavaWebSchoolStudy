@@ -1,0 +1,140 @@
+package cn.edu.swu.book;
+
+import cn.edu.swu.book.model.Book;
+import cn.edu.swu.repository.BaseRepo;
+import cn.edu.swu.repository.ResultSetVisitor;
+
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class BookRepo extends BaseRepo {
+
+    private static BookRepo instance = new BookRepo();
+
+    private BookRepo() {
+
+    }
+
+    public static BookRepo getInstance() {
+        return instance;
+    }
+
+    public boolean addBook(Book book) throws SQLException, ClassNotFoundException {
+        String insertTemplate = "insert into book(name, author, price, content) values('%s', '%s', '%s', '%s')";
+        String sql = String.format(insertTemplate, book.getName(), book.getAuthor(), book.getPrice(), book.getContent());
+        return this.execute(sql);
+    }
+
+    public boolean deleteBook(Integer id) throws SQLException, ClassNotFoundException {
+        String deleteTemplate = "delete from book where id = %d";
+        String sql = String.format(deleteTemplate, id);
+        return this.execute(sql);
+    }
+
+    public List<Book> queryBook(String sql) throws SQLException, ClassNotFoundException {
+        final List<Book> books = new ArrayList<>();
+        this.query(sql, new ResultSetVisitor() {
+
+            public void visit(ResultSet resultSet) {
+                Book book = new Book();
+                try {
+                    book.setId(resultSet.getInt("id"));
+                    book.setName(resultSet.getString("name"));
+                    book.setAuthor(resultSet.getString("author"));
+                    book.setPrice(BigDecimal.valueOf(resultSet.getDouble("price")));
+                    book.setContent(resultSet.getString("content"));
+                    books.add(book);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
+        return books;
+    }
+
+    public Book getBookById(Integer id) throws SQLException, ClassNotFoundException {
+        String template = "select * from book where id = %d";
+        String sql = String.format(template, id);
+
+        List<Book> books = this.queryBook(sql);
+
+        return books.size() > 0 ? books.get(0) : null;
+    }
+
+    public boolean updateBook(Book book) throws SQLException, ClassNotFoundException {
+        String template = "update book set name = '%s', author = '%s', price = %s, content ='%s' where id = %d";
+        String sql = String.format(template, book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getId());
+        return this.execute(sql);
+    }
+
+
+
+    public int totalBooks() throws SQLException, ClassNotFoundException {
+        String sql = "select count(*) as tt from book";
+        final int[] pages = {0};
+
+        this.query(sql, new ResultSetVisitor() {
+            public void visit(ResultSet resultSet) {
+                try {
+                    pages[0] =resultSet.getInt("tt");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
+        return pages[0];
+    }
+
+    public int totalPagesOfBooks(int pageSize) throws SQLException, ClassNotFoundException {
+        String sql = "select count(* / 4) as pages from book";
+        final int[] pages = {0};
+
+        this.query(sql, new ResultSetVisitor() {
+            public void visit(ResultSet resultSet) {
+                try {
+                    pages[0] =resultSet.getInt("pages");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
+        return pages[0];
+    }
+
+    public static List<Book> getAllBook() {
+        List<Book> result = new ArrayList<>();
+        String sql = "select id, name, author, price, content from book";
+        try (Connection connection = getConnection()) {
+            try (Statement statement = connection.createStatement()) {
+                try (ResultSet resultSet = statement.executeQuery(sql)) {
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String author = resultSet.getString("author");
+                        BigDecimal price = resultSet.getBigDecimal(4);
+                        String content = resultSet.getString(5);
+
+                        System.out.println(String.format("%d, %s, %s, %f, %s",id,name,author,price,content));
+
+                        Book book = new Book(id, name, author, price, content);
+                        result.add(book);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+}
