@@ -25,8 +25,14 @@ public class BookRepo extends BaseRepo {
     }
 
     public boolean addBook(Book book) throws SQLException, ClassNotFoundException {
-        String insertTemplate = "insert into book(name, author, price, content) values('%s', '%s', '%s', '%s')";
-        String sql = String.format(insertTemplate, book.getName(), book.getAuthor(), book.getPrice(), book.getContent());
+        String sql;
+        if (book.getImageUrl() != null) {
+            String insertTemplate = "insert into book(name, author, price, content, imageurl) values('%s', '%s', '%s', '%s', '%s')";
+            sql = String.format(insertTemplate, book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getImageUrl());
+        } else {
+            String insertTemplate = "insert into book(name, author, price, content) values('%s', '%s', '%s', '%s')";
+            sql = String.format(insertTemplate, book.getName(), book.getAuthor(), book.getPrice(), book.getContent());
+        }
         return this.execute(sql);
     }
 
@@ -48,6 +54,7 @@ public class BookRepo extends BaseRepo {
                     book.setAuthor(resultSet.getString("author"));
                     book.setPrice(BigDecimal.valueOf(resultSet.getDouble("price")));
                     book.setContent(resultSet.getString("content"));
+                    book.setImageUrl(resultSet.getString("imageurl"));
                     books.add(book);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -68,21 +75,32 @@ public class BookRepo extends BaseRepo {
     }
 
     public boolean updateBook(Book book) throws SQLException, ClassNotFoundException {
-        String template = "update book set name = '%s', author = '%s', price = %s, content ='%s' where id = %d";
-        String sql = String.format(template, book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getId());
-        return this.execute(sql);
+        String sql = null;
+        if (book.getImageUrl() != null) {
+            String template = "update book set " +
+                    "name='%s', author='%s', price=%s, content='%s', imageurl='%s' where id = %d";
+            sql = String.format(template,
+                    book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getImageUrl(),
+                    book.getId());
+        } else {
+            String template = "update book set " +
+                    "name='%s', author='%s', price=%s, content='%s' where id = %d";
+            sql = String.format(template,
+                    book.getName(), book.getAuthor(), book.getPrice(), book.getContent(), book.getId());
+        }
+      return this.execute(sql);
     }
 
 
 
     public int totalBooks() throws SQLException, ClassNotFoundException {
-        String sql = "select count(*) as tt from book";
+        String sql = "select count(*) from book";
         final int[] pages = {0};
 
         this.query(sql, new ResultSetVisitor() {
             public void visit(ResultSet resultSet) {
                 try {
-                    pages[0] =resultSet.getInt("tt");
+                    pages[0] =resultSet.getInt(1);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

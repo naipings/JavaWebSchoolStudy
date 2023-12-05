@@ -7,7 +7,7 @@ import java.sql.*;
 
 public abstract class BaseRepo {
 
-    private static BasicDataSource dataSource = null;
+    private static BasicDataSource dataSource;
 
     static {
         try {

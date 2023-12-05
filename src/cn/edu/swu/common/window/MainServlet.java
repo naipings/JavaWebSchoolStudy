@@ -34,8 +34,9 @@ public class MainServlet extends HttpServlet {
             int offset = (currentPage - 1) * pageSize;
             int total = BookRepo.getInstance().totalBooks();
 
-            String sql = String.format("select * from book limit %d offset %s", pageSize, offset);
+            String sql = String.format("select * from book order by id desc limit %d offset %s", pageSize, offset);
             List<Book> books = BookRepo.getInstance().queryBook(sql);
+
             String table = PageTools.warpBookTable(books);
 
             Pager pager = new Pager();
