@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="servlet-api">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/hutool-all-5.8.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/mysql-connector-java-5.1.48-bin.jar!/" />
+      <root url="file://$PROJECT_DIR$/webRoot" />
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/commons-dbcp2-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/commons-pool2-2.12.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../Tomcat10/apache-tomcat-10.1.15/lib/servlet-api.jar!/" />
+      <root url="file://$PROJECT_DIR$/webRoot/WEB-INF/lib" />
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/jackson-databind-2.16.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/jackson-core-2.16.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/webRoot/WEB-INF/lib/jackson-annotations-2.16.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/webRoot/WEB-INF/lib" recursive="false" />
+  </library>
+</component>

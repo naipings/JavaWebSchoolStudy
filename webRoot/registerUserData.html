@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Improve personal information</title>
+    <link rel="stylesheet" href="./css/registerData.css" />
+</head>
+<body>
+<h1
+        style="
+        text-align: center;
+        color: aliceblue;
+        margin-bottom: 20px;
+        margin-top: 10px;
+        font-size: 300%;
+        font-family: 华文新魏;
+      "
+>
+    欢迎注册成为本网站会员
+</h1>
+<div class="box">
+    <form autocomplete="off" action="./registerUserData" method="post">
+        <h2>Improve personal information</h2>
+        <div class="inputBox">
+            <input type="text" required="required" name="user" value="Jack" />
+            <span>Username</span>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <input
+                    type="text"
+                    required="required"
+                    name="nickname"
+                    value="123456"
+            />
+            <span>nickname</span>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <input
+                    type="text"
+                    required="required"
+                    name="email"
+                    value="123456"
+            />
+            <span>email</span>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <input
+                    type="text"
+                    required="required"
+                    name="address"
+                    value="123456"
+            />
+            <span>address</span>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <input
+                    type="text"
+                    required="required"
+                    name="city"
+                    
+            />
+            <span>city</span>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <input
+                    type="text"
+                    required="required"
+                    name="country"
+                    
+            />
+            <span>country</span>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <!-- <textarea name="introduce" cols="30" rows="5"></textarea> -->
+            <input
+                    type="text"
+                    required="required"
+                    name="introduce"
+                    value="123456"
+                    
+            />
+            <span>introduce</span>
+            <i></i>
+        </div>
+        
+        <div style="text-align: center; margin-top: 10px">
+            <input type="submit" value="submit" />
+
+            <input type="reset" value="clear" name="清空" />
+        </div>
+    </form>
+</div>
+<div class="div01">
+    <a href="./login" methods="post">返回登录界面</a>
+</div>
+</body>
+</html>
