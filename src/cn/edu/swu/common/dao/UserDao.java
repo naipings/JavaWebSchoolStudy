@@ -37,26 +37,24 @@ public class UserDao extends BaseRepo {
 
     //添加用户信息
     public int addUserMessage(UserData userData) throws SQLException, ClassNotFoundException {
-//        String sql;
-//        String insertTemplate = "update usersdata set nickname='%s', email='%s', address='%s', city='%s', country='%s', introduce='%s' where userId=%d";
-//        sql = String.format(insertTemplate, userData.getNickname(), userData.getEmail(), userData.getAddress(), userData.getCity(), userData.getCountry(), userData.getIntroduce(), userData.getUserId());
-//
-//        return this.execute(sql);
-
         //采用预处理的方式
         PreparedStatement preSql; //预处理语句
         int num1 = 0; //返回不同num1的值，表示不同状态
-        String sqlStr = "update usersdata set nickname=?, email=?, address=?, city=?, country=?, introduce=? where userId=?"; //?表示从外部输入的
+
+        String sqlStr = "update usersdata set nickname=?, email=?, phone=?, address=?, firstname=?, lastname=?, city=?, country=?, introduce=? where userId=?"; //?表示从外部输入的
 
         try {
             preSql = con.prepareStatement(sqlStr);
             preSql.setString(1, userData.getNickname());
             preSql.setString(2, userData.getEmail());
-            preSql.setString(3, userData.getAddress());
-            preSql.setString(4, userData.getCity());
-            preSql.setString(5, userData.getCountry());
-            preSql.setString(6, userData.getIntroduce());
-            preSql.setInt(7, userData.getUserId());
+            preSql.setString(3, userData.getPhone());
+            preSql.setString(4, userData.getAddress());
+            preSql.setString(5, userData.getFirstName());;
+            preSql.setString(6, userData.getLastName());
+            preSql.setString(7, userData.getCity());
+            preSql.setString(8, userData.getCountry());
+            preSql.setString(9, userData.getIntroduce());
+            preSql.setInt(10, userData.getUserId());
 
             num1 = preSql.executeUpdate(); //更新数据，返回值放到num里面
             return num1;
@@ -74,10 +72,12 @@ public class UserDao extends BaseRepo {
 
         List<UserData> userDatas = this.queryUserData(sql);
 
+//        System.out.println(userDatas.get(0).getNickname());;
+
         return !userDatas.isEmpty() ? userDatas.get(0) : null;
     }
 
-    //更新用户信息
+    //获取用户信息
     public List<UserData> queryUserData(String sql) throws SQLException, ClassNotFoundException {
         final List<UserData> userDatas = new ArrayList<>();
         this.query(sql, new ResultSetVisitor() {
@@ -88,7 +88,10 @@ public class UserDao extends BaseRepo {
                     userData.setUserId(Integer.valueOf(String.valueOf(resultSet.getInt("userId"))));
                     userData.setNickname(resultSet.getString("nickname"));
                     userData.setEmail(resultSet.getString("email"));
+                    userData.setPhone(resultSet.getString("phone"));
                     userData.setAddress(resultSet.getString("address"));
+                    userData.setFirstName(resultSet.getString("firstName"));
+                    userData.setLastName(resultSet.getString("lastName"));
                     userData.setCity(resultSet.getString("city"));
                     userData.setCountry(resultSet.getString("country"));
                     userData.setIntroduce(resultSet.getString("introduce"));

@@ -26,19 +26,27 @@ public class UserServlet extends HttpServlet {
         //根据userId获取用户信息
         UserData userData = new UserData();
         try {
-            System.out.println(LoginDao.uid);
+            System.out.println("in userCenter uid="+LoginDao.uid);
             userData = UserDao.getInstance().UserMessage(LoginDao.uid);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
+
         String json = String.format(
                 "{\n" +
-                "\t\"nickname\": %s,\n" +
-                "\t\"email\": \"%s\",\n" +
-                "\t\"address\": \" %s\",\n" +
-                "\t\"introduce\": \" %s\"\n" +
-                "}", userData.getNickname(), userData.getEmail(), userData.getAddress(), userData.getIntroduce());
+                    "\t\"nickname\": \"%s\",\n" +
+                    "\t\"email\": \"%s\",\n" +
+                    "\t\"phone\": \"%s\",\n" +
+                    "\t\"address\": \"%s\",\n" +
+                    "\t\"city\": \"%s\",\n" +
+                    "\t\"country\": \"%s\",\n" +
+                    "\t\"firstName\": \"%s\",\n" +
+                    "\t\"lastName\": \"%s\",\n" +
+                    "\t\"introduce\": \"%s\"\n" +
+                "}", userData.getNickname(), userData.getEmail(), userData.getPhone(),
+                userData.getAddress(), userData.getCity(), userData.getCountry(),
+                userData.getFirstName(), userData.getLastName(), userData.getIntroduce());
 
         //返回结果
         response.setContentType("application/json");

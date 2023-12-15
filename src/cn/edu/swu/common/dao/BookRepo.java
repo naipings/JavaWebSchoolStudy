@@ -73,6 +73,40 @@ public class BookRepo extends BaseRepo {
         return books.size() > 0 ? books.get(0) : null;
     }
 
+
+    public Book getBookByName(String name) throws SQLException, ClassNotFoundException {
+        System.out.println("in getBookByName");
+        System.out.println("name="+name);
+        String template = "select * from book where name = '%s'";
+        String sql = String.format(template, name);
+
+        List<Book> books = this.queryBook(sql);
+
+        return books.size() > 0 ? books.get(0) : null;
+    }
+
+    public List<Book> getBooksByName(String name) throws SQLException, ClassNotFoundException {
+        System.out.println("in getBookByName");
+        System.out.println("name="+name);
+        String template = "select * from book where name = '%s'";
+        String sql = String.format(template, name);
+
+        List<Book> books = this.queryBook(sql);
+
+        return books;
+    }
+
+
+    public Book getBookByAuthor(String author) throws SQLException, ClassNotFoundException {
+        String template = "select * from book where author = '%s'";
+        String sql = String.format(template, author);
+
+        List<Book> books = this.queryBook(sql);
+
+        return books.size() > 0 ? books.get(0) : null;
+    }
+
+
     public boolean updateBook(Book book) throws SQLException, ClassNotFoundException {
         String sql = null;
         if (book.getImageUrl() != null) {
@@ -142,6 +176,36 @@ public class BookRepo extends BaseRepo {
                         System.out.println(String.format("%d, %s, %s, %f, %s",id,name,author,price,content));
 
                         Book book = new Book(id, name, author, price, content);
+                        result.add(book);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    public static List<Book> getAllBook2() {
+        List<Book> result = new ArrayList<>();
+        String sql = "select id, name, author, price, content, imageurl from book";
+        try (Connection connection = getConnection()) {
+            try (Statement statement = connection.createStatement()) {
+                try (ResultSet resultSet = statement.executeQuery(sql)) {
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String author = resultSet.getString("author");
+                        BigDecimal price = resultSet.getBigDecimal(4);
+                        String content = resultSet.getString(5);
+                        String image = resultSet.getString("imageurl");
+
+                        System.out.println(String.format("%d, %s, %s, %f, %s, %s",id,name,author,price,content,image));
+
+                        Book book = new Book(id, name, author, price, content, image);
                         result.add(book);
                     }
                 }

@@ -18,14 +18,18 @@ public class DeleteBookServlet  extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer id = Integer.parseInt(request.getParameter("id"));
+        String id = request.getParameter("id");
+        Integer id1 = Integer.parseInt(id);
+        System.out.println("in deleteBook id="+id1);
+//        Integer id = Integer.parseInt(request.getParameter("id"));
         try {
-            BookRepo.getInstance().deleteBook(id);
-            response.sendRedirect("./main");
+            BookRepo.getInstance().deleteBook(id1);
+            response.sendRedirect("http://10.69.34.196:8081/#/");
         } catch (SQLException | ClassNotFoundException | IOException e) {
 //            throw new RuntimeException(e);
             request.setAttribute("errorInfo:", "something wrong!");
             request.getRequestDispatcher("./errorHandle").forward(request, response);
         }
     }
+
 }

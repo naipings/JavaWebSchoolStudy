@@ -15,6 +15,15 @@ public class Book {
 
     }
 
+    public Book(Integer id, String name, String author, BigDecimal price, String content, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.content = content;
+        this.imageUrl = imageUrl;
+    }
+
     public Book(String name, String author, BigDecimal price, String content, String imageUrl) {
         this.name = name;
         this.author = author;

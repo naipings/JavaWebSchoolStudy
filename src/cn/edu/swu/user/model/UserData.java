@@ -7,6 +7,9 @@ public class UserData {
     private String password;
     private String nickname;
     private String email;
+    private String phone;
+    private String firstName;
+    private String lastName;
     private String address;
     private String city;
     private String country;
@@ -14,6 +17,20 @@ public class UserData {
 
     public UserData() {
 
+    }
+
+    public UserData(Integer userId, String account, String nickname, String email, String phone, String firstName, String lastName, String address, String city, String country, String introduce) {
+        this.userId = userId;
+        this.account = account;
+        this.nickname = nickname;
+        this.email = email;
+        this.phone = phone;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.introduce = introduce;
     }
 
     public UserData(Integer userId, String nickname, String email, String address, String city, String country, String introduce) {
@@ -80,5 +97,37 @@ public class UserData {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

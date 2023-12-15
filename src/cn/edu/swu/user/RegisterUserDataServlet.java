@@ -27,18 +27,18 @@ public class RegisterUserDataServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         String nickname = request.getParameter("nickname");
         String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
         String address = request.getParameter("address");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
         String city = request.getParameter("city");
         String country = request.getParameter("country");
         String introduce = request.getParameter("introduce");
 
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-        HttpSession session = request.getSession(true);
-
 
         int num1 = 0;
         try {
@@ -77,12 +77,15 @@ public class RegisterUserDataServlet extends HttpServlet {
             userData.setUserId(userId);
             userData.setNickname(nickname);
             userData.setEmail(email);
+            userData.setPhone(phone);
             userData.setAddress(address);
+            userData.setFirstName(firstName);
+            userData.setLastName(lastName);
             userData.setCity(city);
             userData.setCountry(country);
             userData.setIntroduce(introduce);
             num = UserDao.getInstance().addUserMessage(userData);
-            System.out.println("num:" + num);
+            System.out.println("in RegisterUserDataServlet num:" + num);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

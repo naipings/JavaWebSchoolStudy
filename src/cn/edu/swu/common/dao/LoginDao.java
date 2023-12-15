@@ -35,6 +35,7 @@ public class LoginDao {
             rs = preSql.executeQuery(); //查询，返回值放到rs里面
             while ( rs.next() ) { //rs是表头，看他下一个是否有东西，如果里面有东西执行了，就返回true
                 act2 = rs.getString("account");
+                act = act2;
                 System.out.println(act2);
             }
             if ( getUid(act2) != 0 ) {
