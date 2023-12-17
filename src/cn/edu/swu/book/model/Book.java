@@ -10,9 +10,20 @@ public class Book {
     private BigDecimal price;
     private String content;
     private String imageUrl;
+    private Integer num;
 
     public  Book() {
 
+    }
+
+    public Book(Integer id, String name, String author, BigDecimal price, Integer num, String content, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.num = num;
+        this.content = content;
+        this.imageUrl = imageUrl;
     }
 
     public Book(Integer id, String name, String author, BigDecimal price, String content, String imageUrl) {
@@ -93,6 +104,14 @@ public class Book {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
 }

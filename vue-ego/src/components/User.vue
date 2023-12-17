@@ -422,7 +422,8 @@ export default {
     axios.get('/api/userCenter')
       .then(res => {
         this.userInfo = res.data
-        console.log(res.data)
+        console.log(res);
+        console.log(res.data);
       });
     console.log(this.userInfo);
   },

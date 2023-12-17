@@ -33,18 +33,18 @@
         </el-table-column>
         <!-- <el-table-column prop="num" label="书籍销量" width="100">
         </el-table-column> -->
-        <el-table-column prop="image" label="商品图片" show-overflow-tooltip>
-          <div class="demo-image__preview">
-            <el-image 
-              style="width: 100px; height: 100px"
-              :src="url" 
-              :preview-src-list="srcList">
-            </el-image>
-          </div>
+        <el-table-column prop="imageurl" label="商品图片" show-overflow-tooltip >
+            <template slot-scope="scope">
+              <el-image
+                style="width: 100%"
+                :src="scope.row.imageurl"
+                :preview-src-list="scope.row.imageurl">
+              </el-image>
+            </template>
 
-          <!-- <a href="../../assets/img/upload/">
-            <img src="" alt="图片" width="100px" height="100px">
-          </a> -->
+          <!-- <template slot-scope="scope">
+            <img style="width: 100%" :src="scope.row.imageurl"/>
+          </template> -->
         </el-table-column>
         <!-- <el-table-column
           prop="sellPoint"
@@ -131,12 +131,12 @@ export default {
       currentPage: 1, //选中的高亮页码
       title:'添加商品',
       rowData:{},//当前行的数据对象
+      totalrow:"",
       input:"",
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
       srcList: [
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+          // 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+          // 'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+          // 'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
       ],
     }
   },
@@ -148,7 +148,7 @@ export default {
         this.books = res.data;
         // console.log(res.data);
         console.log(this.books);
-  
+
         //获取'}'出现的次数
         var index = this.books.indexOf('}')
         var num = 0;
@@ -161,7 +161,8 @@ export default {
           // console.log(this.row);
           index = this.books.indexOf('}',index + 1);
         }
-        //console.log('}出现的次数:' + num);
+        this.totalrow = num;
+        // console.log('}出现的次数:' + num);
 
         //获取'}'出现的位置及次数，用于确定分割数组里面内容的位置
         index = this.books.indexOf('}');
@@ -177,20 +178,14 @@ export default {
             this.book = this.books.slice(tempNum+2,index+1);
           }
 
-          //处理图片问题
-          // var path = this.book.imageUrl;
-          // console.log("path:", path);
-          // var name = path.substring(path.lastIndexOf("\\") + 1);
-          // this.url[i] = path.substring(0, path.lastIndexOf("\\") + 1)
-          // .replace("../../assets/img/upload", "upload") + encodeURI*(name);
-          
           // console.log(this.book);
           // console.log(index);
+
           i++;
           tempNum = index+1;
           index = this.books.indexOf('}',index + 1);       
 
-          this.http(1);
+          // this.http(1);
         }
       });
   },
@@ -341,7 +336,7 @@ export default {
         // console.log(res)
         this.books = res.data;
         // console.log(res.data);
-        console.log(this.books);
+        // console.log(this.books);
   
         //获取'}'出现的次数
         var index = this.books.indexOf('}')
