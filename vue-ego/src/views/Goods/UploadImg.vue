@@ -33,17 +33,21 @@
 </template>
 
 <script>
-import base from '../../api/base'
+// import base from '../../api/base'
 export default {
   data() {
     return {
-        url:base.uploadUrl,//图片地址服务器
+        // url:base.uploadUrl,//图片地址服务器
+        // fileList: [],
+        url:"",
         fileList: [],
     };
   },
   methods: {
     //点击上传按钮--submit()	手动上传文件列表
     submitUpload() {
+
+      
       this.$refs.upload.submit();
     },
     /**

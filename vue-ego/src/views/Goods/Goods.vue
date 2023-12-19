@@ -38,7 +38,7 @@
               <el-image
                 style="width: 100%"
                 :src="scope.row.imageurl"
-                :preview-src-list="scope.row.imageurl">
+                >
               </el-image>
             </template>
 
@@ -53,11 +53,27 @@
           show-overflow-tooltip
         >
         </el-table-column> -->
-        <el-table-column prop="content" label="商品描述" show-overflow-tooltip width="300">
+        <el-table-column prop="content" label="商品描述" show-overflow-tooltip width="200">
         </el-table-column>
         
-        <el-table-column label="操作" width="360">
+        <el-table-column label="操作" width="460">
           <template slot-scope="scope">
+            <el-button 
+            class="CartBtn"
+            @click="intoChat(scope.$index, scope.row)"
+            >
+              <span class="IconContainer"> 
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="rgb(17, 17, 17)" class="cart"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+              </span>
+              <p class="text">加购</p>
+            </el-button>
+
+            <!-- <el-button
+              class="btn"
+              size="mini" 
+              @click="intoChat(scope.$index, scope.row)"
+              >
+              加入购物车</el-button> -->
             <el-button
               class="btn"
               size="mini" 
@@ -108,7 +124,7 @@
 <script>
 import MyPagination from "../../components/MyPagination.vue";
 import GoodsDialog from "./GoodsDialog.vue";
-import LookGood from './LookGood.vue'
+import LookGood from './LookGood.vue';
 import axios  from 'axios'
 export default {
   components: {
@@ -269,6 +285,41 @@ export default {
      */ 
     searchHttp() {
       this.$router.go(0);
+    },
+    /**
+    * 加入购物车
+    */
+    intoChat(index, row) {
+      //请求接口----
+      axios({
+        methods: 'GET',
+        url: '/api/updateChatData',
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        params:{
+          id: row.id,
+          name: row.name,
+          author: row.author,
+          price: row.price,
+          imageurl: row.imageurl,
+          content: row.content,
+          num: 1,
+        }
+      })
+      //视图更新
+      // location.reload();
+      // this.http(1);
+      this.$message({
+        type: "success",
+        message: "添加购物车成功!",
+      })
+      .catch(() => {
+        this.$message({
+        type: "info",
+        message: "已取消加入购物车",
+      });
+      })
     },
     /**
      * 查看操作
@@ -832,5 +883,80 @@ export default {
   100% {
     transform: scale3d(1, 1, 1);
   }
+}
+
+//7.
+.CartBtn {
+  width: 100px;
+  height: 40px;
+  border-radius: 12px;
+  border: none;
+  background-color: rgb(255, 208, 0);
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: .5s;
+  overflow: hidden;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+  text-align: center;
+}
+
+.IconContainer {
+  position: absolute;
+  left: -50px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  transition-duration: .5s;
+  text-align: center;
+}
+
+.icon {
+  border-radius: 1px;
+}
+
+.text {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(17, 17, 17);
+  z-index: 1;
+  transition-duration: .5s;
+  font-size: 1.04em;
+  font-weight: 600;
+  text-align: center;
+}
+
+.CartBtn:hover {
+  background-color: rgb(255, 208, 0);
+}
+
+.CartBtn:hover .IconContainer {
+  background-color: rgb(255, 208, 0);
+  transform: translateX(58px);
+  border-radius: 40px;
+  transition-duration: .5s;
+}
+
+.CartBtn:hover .text {
+  background-color: rgb(255, 208, 0);
+  transform: translate(30px,0px);
+  transition-duration: .5s;
+}
+
+.CartBtn:active {
+  background-color: rgb(255, 208, 0);
+  transform: scale(0.95);
+  transition-duration: .5s;
 }
 </style>

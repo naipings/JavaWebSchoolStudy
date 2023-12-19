@@ -2,6 +2,7 @@ package cn.edu.swu.ShoppingCart;
 
 import cn.edu.swu.book.model.Book;
 import cn.edu.swu.common.dao.BookRepo;
+import cn.edu.swu.common.dao.ShoppingChatDao;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,28 +18,29 @@ import java.util.List;
  * 输出JSON内容Servlet类
  */
 @WebServlet(name="getChatData",urlPatterns = "/getChatData")
-public class GetCartData extends HttpServlet {
+public class GetCartDataServlet extends HttpServlet {
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //根据获取所有的书籍信息
         List<Book> books = new ArrayList<>();
 
-        books = BookRepo.getAllBook3();
+        books = ShoppingChatDao.getChatBooks();
 
         String[] bookJson = new String[books.size()];
         int i = 0;
         for (Book book : books) {
+//            System.out.println("content"+book.getContent());
             bookJson[i] = String.format(
                     "{\n" +
                             "\t\"id\": \"%s\",\n" +
                             "\t\"name\": \"%s\",\n" +
-//                    "\t\"image\": \"%s\",\n" +
+                            "\t\"imageurl\": \"%s\",\n" +
                             "\t\"author\": \"%s\",\n" +
                             "\t\"price\": \"%s\",\n" +
                             "\t\"num\": \"%d\",\n" +
                             "\t\"content\": \"%s\"\n" +
                             "}",
-                    book.getId(), book.getName(),
+                    book.getId(), book.getName(),book.getImageUrl(),
                     book.getAuthor(), book.getPrice(), book.getNum(), book.getContent());
             i++;
         }

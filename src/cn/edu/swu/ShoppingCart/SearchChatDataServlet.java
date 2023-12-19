@@ -1,4 +1,4 @@
-package cn.edu.swu.book;
+package cn.edu.swu.ShoppingCart;
 
 import cn.edu.swu.book.model.Book;
 import cn.edu.swu.common.dao.BookRepo;
@@ -19,16 +19,16 @@ import java.util.List;
 /**
  * 输出JSON内容Servlet类
  */
-@WebServlet(name="searchBook",urlPatterns = "/searchBook")
+@WebServlet(name="searchChatData",urlPatterns = "/searchChatData")
 
 @MultipartConfig//**加上这个注解，反射该Servlet时才知道处理的是文件上传
-public class SearchBookServlet extends HttpServlet {
+public class SearchChatDataServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         String name = request.getParameter("name");
         String author = request.getParameter("author");
 
-        System.out.println("in searchBook");
+        System.out.println("in SearchChatDataServlet");
         System.out.println("id="+id+", name="+name+", author="+author);
 
         Integer id1 = 0;
@@ -82,11 +82,12 @@ public class SearchBookServlet extends HttpServlet {
                             "\t\"name\": \"%s\",\n" +
                             "\t\"author\": \"%s\",\n" +
                             "\t\"price\": \"%s\",\n" +
+                            "\t\"num\": \"%d\",\n" +
                             "\t\"imageurl\": \"%s\",\n" +
                             "\t\"content\": \"%s\"\n" +
                             "}",
                     book.getId(), book.getName(), book.getAuthor(),
-                    book.getPrice(), book.getImageUrl(), book.getContent());
+                    book.getPrice(), book.getNum(), book.getImageUrl(), book.getContent());
             i++;
         }
 

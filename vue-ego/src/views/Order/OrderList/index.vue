@@ -19,7 +19,7 @@
         <el-table-column
           prop="name"
           label="书籍名称"
-          width="120"
+          width="200"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -31,20 +31,14 @@
         </el-table-column>
         <!-- <el-table-column prop="num" label="书籍销量" width="100">
         </el-table-column> -->
-        <el-table-column prop="image" label="商品图片" show-overflow-tooltip >
-          <div class="demo-image__preview">
-            <template slot-scope="scope">
-              <el-image v-for="(imgurl, index) in url" :key="index"
-                style="width: 100px; height: 100px"
-                :src="scope.row.url"
-                :preview-src-list="srcList">
+        <el-table-column prop="imageurl" label="商品图片" show-overflow-tooltip >
+          <template slot-scope="scope">
+              <el-image
+                style="width: 100px; height: 100px;"
+                :src="scope.row.imageurl"
+                :preview-src-list="scope.row.imageurl">
               </el-image>
             </template>
-          </div>
-
-          <!-- <a href="../../assets/img/upload/">
-            <img src="" alt="图片" width="100px" height="100px">
-          </a> -->
         </el-table-column>
         <!-- <el-table-column
           prop="sellPoint"
@@ -99,21 +93,21 @@
 
     <!-- 4. 显示弹框组件 操作子组件：1. 父传子 2. children   3. ref  -->
     <!-- <GoodsDialog :dialogVisible='dialogVisible'  @changeDialog='changeDialog'/> -->
-    <GoodsDialog ref="dialog" :title="title" :rowData='rowData' />
-    <LookGood ref="lookGood" :title="title" :rowData="rowData" />
+    <ChatDataDialog ref="chatDataDialog" :title="title" :rowData='rowData' />
+    <ChatLookGood ref="chatLookGood" :title="title" :rowData="rowData" />
   </div>
 </template>
 
 <script>
 import MyPagination from "../../../components/MyPagination.vue";
-import GoodsDialog from "../../Goods/GoodsDialog.vue";
-import LookGood from '../../Goods/LookGood.vue'
+import ChatDataDialog from "../../Chats/ChatDataDialog.vue";
+import ChatLookGood from "../../Chats/ChatLookGood.vue";
 import axios  from 'axios'
 export default {
   components: {
     MyPagination,
-    GoodsDialog,
-    LookGood,
+    ChatDataDialog,
+    ChatLookGood,
   },
   data() {
     return {
@@ -132,13 +126,7 @@ export default {
       rowData:{},//当前行的数据对象
       totalrow:"",
       input:"",
-      localImages:"",
-      localImage:"",
       url: [
-        // {imgUrl:require('../../assets/img/upload/OIP-C.jpg'),},
-        // {imgUrl:require('../../assets/img/upload/no-upload.jpg'),},
-        // {imgUrl:require('../../assets/img/upload/OIP-C.jpg'),},
-        // {imgUrl:require('../../assets/img/upload/no-upload.jpg'),},
       ],
       srcList: [
           'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
@@ -156,47 +144,45 @@ axios.get('/api/getChatData')
         // console.log(res.data);
         console.log(this.books);
   
-        // //获取'}'出现的次数
-        // var index = this.books.indexOf('}')
-        // var num = 0;
-        // var tempNum = 0;
-        // while(index !== -1){
-        //   this.book = this.books.slice(tempNum+1,index+1);
-        //   num++;
-        //   //商品行号
-        //   this.row[num-1] = num;
-        //   // console.log(this.row);
-        //   index = this.books.indexOf('}',index + 1);
-        // }
-        // this.totalrow = num;
-        // // console.log('}出现的次数:' + num);
+        //获取'}'出现的次数
+        var index = this.books.indexOf('}')
+        var num = 0;
+        var tempNum = 0;
+        while(index !== -1){
+          this.book = this.books.slice(tempNum+1,index+1);
+          num++;
+          //商品行号
+          this.row[num-1] = num;
+          // console.log(this.row);
+          index = this.books.indexOf('}',index + 1);
+        }
+        this.totalrow = num;
+        // console.log('}出现的次数:' + num);
 
-        // //获取'}'出现的位置及次数，用于确定分割数组里面内容的位置
-        // index = this.books.indexOf('}');
-        // var tempNum = 0;
-        // var i = 0;
-        // while(index !== -1){
-        //   // 获取书籍信息
-        //   if ( i == 0) {
-        //     this.book = this.books.slice(tempNum+1,index+2);
-        //   } else if ( i>0 & i<num-1 ) {
-        //     this.book = this.books.slice(tempNum+2,index+2);
-        //   } else if ( i == num-1 ) {
-        //     this.book = this.books.slice(tempNum+2,index+1);
-        //   }
+        //获取'}'出现的位置及次数，用于确定分割数组里面内容的位置
+        index = this.books.indexOf('}');
+        var tempNum = 0;
+        var i = 0;
+        while(index !== -1){
+          // 获取书籍信息
+          if ( i == 0) {
+            this.book = this.books.slice(tempNum+1,index+2);
+          } else if ( i>0 & i<num-1 ) {
+            this.book = this.books.slice(tempNum+2,index+2);
+          } else if ( i == num-1 ) {
+            this.book = this.books.slice(tempNum+2,index+1);
+          }
 
-        //   // console.log(this.book);
-        //   // console.log(index);
+          // console.log(this.book);
+          // console.log(index);
 
-        //   i++;
-        //   tempNum = index+1;
-        //   index = this.books.indexOf('}',index + 1);       
+          i++;
+          tempNum = index+1;
+          index = this.books.indexOf('}',index + 1);       
 
-          // this.http(1);
-        // }
+          this.http(1);
+        }
       });
-
-    
   },
   methods: {
     /**
@@ -227,7 +213,7 @@ axios.get('/api/getChatData')
       //请求接口----
       axios({
         methods: 'GET',
-        url: '/api/searchBook',
+        url: '/api/searchChatData',
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -271,7 +257,7 @@ axios.get('/api/getChatData')
      * 查看操作
      */
     lookBook(index, row) {
-      this.$refs.lookGood.dialogVisible = true;
+      this.$refs.chatLookGood.dialogVisible = true;
       this.title ='查看商品';
       this.rowData = {...row};
       console.log(this.rowData);
@@ -281,7 +267,7 @@ axios.get('/api/getChatData')
      */
     handleEdit(index,row) {//row={}
       //1. 点击编辑按钮 显示弹框  2. 弹框上回显数据展示 -当前的行的数据 
-      this.$refs.dialog.dialogVisible = true;
+      this.$refs.chatDataDialog.dialogVisible = true;
       this.title ='编辑商品';
       this.rowData = {...row};
       console.log(this.rowData);
@@ -301,12 +287,15 @@ axios.get('/api/getChatData')
           //请求接口----
             axios({
             methods: 'POST',
-            url: '/api/deleteBook',
+            url: '/api/deleteChatData',
             headers: {
               "Content-Type": "multipart/form-data",
             },
             params:{
-              id: row.id
+              id: row.id,
+              name: row.name,
+              author: row.author,
+              num: row.num,
             }
           })
           //视图更新
@@ -328,12 +317,12 @@ axios.get('/api/getChatData')
      * 商品列表获取
      */
     http(page) {
-      axios.get('/api/getBooks')
+axios.get('/api/getChatData')
       .then(res => {
         // console.log(res)
         this.books = res.data;
         // console.log(res.data);
-        // console.log(this.books);
+        console.log(this.books);
   
         //获取'}'出现的次数
         var index = this.books.indexOf('}')
@@ -347,10 +336,11 @@ axios.get('/api/getChatData')
           // console.log(this.row);
           index = this.books.indexOf('}',index + 1);
         }
-        //console.log('}出现的次数:' + num);
+        this.totalrow = num;
+        // console.log('}出现的次数:' + num);
 
         //获取'}'出现的位置及次数，用于确定分割数组里面内容的位置
-        index = this.books.indexOf('}')
+        index = this.books.indexOf('}');
         var tempNum = 0;
         var i = 0;
         while(index !== -1){
@@ -362,12 +352,15 @@ axios.get('/api/getChatData')
           } else if ( i == num-1 ) {
             this.book = this.books.slice(tempNum+2,index+1);
           }
-          
+
           // console.log(this.book);
           // console.log(index);
+
           i++;
           tempNum = index+1;
-          index = this.books.indexOf('}',index + 1);
+          index = this.books.indexOf('}',index + 1);       
+
+          this.http(1);
         }
 
         this.tableData = res.data.data; //数据列表
@@ -375,7 +368,6 @@ axios.get('/api/getChatData')
         this.pageSize = res.data.pageSize;
         this.dialogVisible = true;
       });
-
     },
   },
   //生命周期函数

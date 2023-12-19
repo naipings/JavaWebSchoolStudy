@@ -1,7 +1,9 @@
-package cn.edu.swu.book;
+package cn.edu.swu.ShoppingCart;
 
 import cn.edu.swu.common.dao.BookRepo;
+import cn.edu.swu.common.dao.ShoppingChatDao;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,9 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/deleteBook")
-public class DeleteBookServlet extends HttpServlet {
+@WebServlet("/deleteChatData")
 
+@MultipartConfig//**加上这个注解，反射该Servlet时才知道处理的是文件上传
+public class DeleteChatDataServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         this.doPost(request, response);
     }
@@ -21,9 +24,8 @@ public class DeleteBookServlet extends HttpServlet {
         String id = request.getParameter("id");
         Integer id1 = Integer.parseInt(id);
         System.out.println("in deleteBook id="+id1);
-//        Integer id = Integer.parseInt(request.getParameter("id"));
         try {
-            BookRepo.getInstance().deleteBook(id1);
+            ShoppingChatDao.getInstance().deleteChatData(id1);
             response.sendRedirect("http://10.69.34.196:8081/#/");
         } catch (SQLException | ClassNotFoundException | IOException e) {
 //            throw new RuntimeException(e);

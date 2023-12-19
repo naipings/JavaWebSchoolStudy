@@ -73,7 +73,7 @@
         <!-- <el-form-item label="商品卖点" prop="sellPoint">
           <el-input v-model="goodsForm.sellPoint"></el-input>
         </el-form-item> -->
-        <el-form-item label="商品图片" prop="image">
+        <el-form-item label="商品图片" prop="imageurl">
           <el-button class="button02" type="primary" @click="innerVisibleImg = true">
             上传图片
           </el-button>
@@ -81,7 +81,7 @@
             >上传图片</el-button
           > -->
           <img
-            :src="goodsForm.image"
+            :src="goodsForm.imageurl"
             height="200px"
             style="margin-left: 10px"
             alt=""
@@ -168,7 +168,7 @@ export default {
         num: "",
         author:"",
         sellPoint: "",
-        image: "",
+        imageurl: "",
         content: "",
         cid: "", //类目的id
         category: "", //商品类目
@@ -217,7 +217,7 @@ export default {
      */
     showImg() {
       this.innerVisibleImg = false;
-      this.goodsForm.image = this.imgUrl;
+      this.goodsForm.imageurl = this.imgUrl;
       //清空图片上传的列表
       this.$refs.upload.fileList = [];
     },
@@ -245,7 +245,7 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           console.log("获取输入的信息", this.goodsForm);
-          //title cid  category sellPoint price num content paramsInfo image
+          //title cid  category sellPoint price num content paramsInfo imageurl
           let {
             name,
             cid,
@@ -255,7 +255,7 @@ export default {
             price,
             num,
             content,
-            image,
+            imageurl,
             id,
           } = this.goodsForm;
           //判断当前的确定按钮类型：
@@ -273,7 +273,7 @@ export default {
                 price: this.goodsForm.price,
                 author: this.goodsForm.author,
                 num: this.goodsForm.num,
-                // image: this.image,
+                // imageurl: this.imageurl,
                 content: this.goodsForm.content,
                 category: this.category, //商品类目
                 date1: this.date1, //商品时间
@@ -311,7 +311,7 @@ export default {
                 price: this.goodsForm.price,
                 author: this.goodsForm.author,
                 num: this.goodsForm.num,
-                image: this.image,
+                imageurl: this.imageurl,
                 content: this.goodsForm.content,
                 category: this.category, //商品类目
                 date1: this.date1, //商品时间
@@ -357,7 +357,7 @@ export default {
         author: "",
         num: "",
         sellPoint: "",
-        image: "",
+        imageurl: "",
         content: "",
         cid: "", //类目的id
         category: "", //商品类目

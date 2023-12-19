@@ -219,34 +219,4 @@ public class BookRepo extends BaseRepo {
         return result;
     }
 
-    public static List<Book> getAllBook3() {
-        List<Book> result = new ArrayList<>();
-        String sql = "select id, name, author, price, num, content, imageurl from book";
-        try (Connection connection = getConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                try (ResultSet resultSet = statement.executeQuery(sql)) {
-                    while (resultSet.next()) {
-                        int id = resultSet.getInt("id");
-                        String name = resultSet.getString("name");
-                        String author = resultSet.getString("author");
-                        BigDecimal price = resultSet.getBigDecimal(4);
-                        int num = resultSet.getInt("num");
-                        String content = resultSet.getString(5);
-                        String image = resultSet.getString("imageurl");
-
-                        System.out.println(String.format("%d, %s, %s, %f, %d, %s, %s",id,name,author,price,num,content,image));
-
-                        Book book = new Book(id, name, author, price, num, content, image);
-                        result.add(book);
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        return result;
-    }
 }

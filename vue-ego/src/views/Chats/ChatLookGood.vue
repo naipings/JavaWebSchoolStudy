@@ -9,52 +9,28 @@
         <!-- 内容区域 -->
         <el-form
           :model="goodsForm"
+          :rules="rules"
           ref="ruleForm"
           label-width="100px"
           class="demo-ruleForm"
         >
-          <!-- <el-form-item label="类目选择" prop="category">
-            <el-button type="primary" @click="innerVisible = true"
-              >类目选择</el-button
-            >
-            <span style="margin-left: 10px">{{ goodsForm.category }}</span>
-          </el-form-item> -->
+          <el-form-item label="类目隶属:" prop="category">
+            <div>{{goodsForm.category}}</div>
+          </el-form-item>
   
-          <el-form-item label="商品名称" prop="name">
-            <el-input v-model="goodsForm.name"></el-input>
+          <el-form-item label="商品名称:" prop="name">
+            <div>{{goodsForm.name}}</div>
           </el-form-item>
-          <el-form-item label="商品价格" prop="price">
-            <el-input v-model="goodsForm.price"></el-input>
+          <el-form-item label="商品价格:" prop="price">
+            <div>{{goodsForm.price}}</div>
           </el-form-item>
-          <el-form-item label="书籍作者" prop="author">
-            <el-input v-model="goodsForm.author"></el-input>
+          <el-form-item label="书籍作者:" prop="author">
+            <div>{{goodsForm.author}}</div>
           </el-form-item>
-          <el-form-item label="商品数量" prop="num">
-            <el-input v-model="goodsForm.num"></el-input>
+          <el-form-item label="商品数量:" prop="num">
+            <div>{{goodsForm.num}}</div>
           </el-form-item>
-          <el-form-item label="发布时间" required>
-            <el-col :span="11">
-              <el-form-item prop="date1">
-                <!-- <el-date-picker
-                  type="date"
-                  placeholder="选择日期"
-                  v-model="goodsForm.date1"
-                  style="width: 100%"
-                ></el-date-picker> -->
-              </el-form-item>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-form-item prop="date2">
-                <!-- <el-time-picker
-                  placeholder="选择时间"
-                  v-model="goodsForm.date2"
-                  style="width: 100%"
-                ></el-time-picker> -->
-              </el-form-item>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="商品图片" prop="imageurl">
+          <el-form-item label="商品图片" prop="image">
             <img
               :src="goodsForm.imageurl"
               height="200px"
@@ -62,21 +38,25 @@
               alt=""
             />
           </el-form-item>
-          <el-form-item label="商品描述" prop="content">
-            <WangEditor ref="myEditor" @sendEditor="sendEditor" />
+          <el-form-item label="商品描述:" prop="content">
+            <p name="content" id="" cols="100" rows="10" prop="content">{{goodsForm.content}}</p>
           </el-form-item>
         </el-form>
+  
+        <!-- 弹框底部区域 -->
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="clearForm">取 消</el-button>
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+        </span>
       </el-dialog>
     </div>
   </template>
   
-
-
-<script>
-import TreeGoods from "./TreeGoods.vue";
-import UploadImg from "./UploadImg.vue";
-import WangEditor from "./WangEditor.vue";
-export default {
+  <script>
+  import TreeGoods from "../Goods/TreeGoods.vue";
+  import UploadImg from "../Goods/UploadImg.vue";
+  import WangEditor from "../Goods/WangEditor.vue";
+  export default {
   props: {
     title: {
       type: String,
@@ -205,3 +185,5 @@ export default {
     text-align: center;
   }
   </style>
+
+  
